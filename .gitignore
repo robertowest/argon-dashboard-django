@@ -1,0 +1,70 @@
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,text,backup,git,virtualenv
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,text,backup,git,virtualenv
+
+### Backup ###
+*.bak
+*.gho
+*.ori
+*.orig
+*.tmp
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+### Text ###
+*.doc
+*.docx
+*.log
+*.msg
+*.pages
+*.rtf
+*.txt
+*.wpd
+*.wps
+
+### VirtualEnv ###
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,text,backup,git,virtualenv
+
