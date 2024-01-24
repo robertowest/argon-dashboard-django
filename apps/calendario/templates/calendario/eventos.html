@@ -1,0 +1,175 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Calendario {% endblock title %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <!-- breadcrumb -->
+    <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-center py-4">
+                    <div class="col-lg-6 col-7">
+                        <h6 class="h2 text-white d-inline-block mb-0">Eventos</h6>
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#">Calendario</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Eventos</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Eventos</h3>
+                            </div>
+                            <div class="col text-right">
+                                <a href="#!" class="btn btn-sm btn-primary">Ver todos</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <!-- Projects table -->
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for member in eventmember %}
+                                <tr role="row">
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+                                    <td>{{ member.user.username }}</td>
+                                    <td>{{ member.user.email }}</td>
+                                    <td>
+                                        <a class="btn btn-danger" href="{% url 'calendario:evento_del' member.id %}">Remove</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+
+
+
+    <div class="container">
+        <div class="clearfix">
+            <a class="btn btn-primary left" href="{% url 'calendario:calendario' %}"> Calendar </a>
+            <a class="btn btn-info right mr-2" href="{% url 'calendario:evento_upd' 1 %}"> Edit Event </a>
+        </div>
+
+        <div class="clearfix">
+            <h3>Event Name: {{ event.title }}</h3>
+            <p>From <span style="color: gray;">{{ event.start_time }}</span> To <span style="color: gray;">{{ event.end_time }}</span></p>
+            <hr>
+            <p>{{ event.description }}</p>
+        </div>
+        <hr>
+        <div class="clearfix">
+            <h4 class="left" > Members of this Event</h4>
+            <a class="btn btn-success right" href="{% url 'calendario:add_eventmember' 1 %}"> Add Member </a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for member in eventmember %}
+                <tr role="row">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+                    <td>{{ member.user.username }}</td>
+                    <td>{{ member.user.email }}</td>
+                    <td>
+                        <a class="btn btn-danger" href="{% url 'calendario:evento_del' member.id %}">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+        </table>
+    </div>
+
+
+    {% comment "" %}
+
+
+    <div class="container">
+        <div class="clearfix">
+            <a class="btn btn-primary left" href="{% url 'calendario:calendario' %}"> Calendar </a>
+            <a class="btn btn-info right mr-2" href="{% url 'calendario:evento_upd' event.pk %}"> Edit Event </a>
+        </div>
+
+        <div class="clearfix">
+            <h3>Event Name: {{ event.title }}</h3>
+            <p>From <span style="color: gray;">{{ event.start_time }}</span> To <span style="color: gray;">{{ event.end_time }}</span></p>
+            <hr>
+            <p>{{ event.description }}</p>
+        </div>
+        <hr>
+        <div class="clearfix">
+            <h4 class="left" > Members of this Event</h4>
+            <a class="btn btn-success right" href="{% url 'calendario:add_eventmember' event.id %}"> Add Member </a>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for member in eventmember %}
+                <tr role="row">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ member.user.first_name }} {{ member.user.last_name }}</td>
+                    <td>{{ member.user.username }}</td>
+                    <td>{{ member.user.email }}</td>
+                    <td>
+                        <a class="btn btn-danger" href="{% url 'calendario:evento_del' member.id %}">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+        </table>
+    </div>
+    
+    
+    {% endcomment %}
+
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

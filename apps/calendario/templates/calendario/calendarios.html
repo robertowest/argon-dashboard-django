@@ -1,0 +1,13 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    <div class="clearfix">
+        <span class="left m-2" style="font-size: 20px;">Usuario: {{ request.user }}</span>
+        <a class="btn btn-info right mr-2" href="{% url 'calendario:calendar' %}?{{ prev_month }}"> << Mes anterior </a>
+        <a class="btn btn-info right mr-2" href="{% url 'calendario:calendar' %}?{{ next_month }} "> mes siguiente >> </a>
+        <a class="btn btn-info right mr-2" href="{% url 'calendario:event_new' %}"> + Nuevo evento </a>
+    </div>
+    <div style="color: blueviolet;">
+        {{ calendar }}
+    </div>
+{% endblock %}
