@@ -42,3 +42,35 @@ def pages(request):
     except:
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+
+
+
+
+
+
+
+
+
+def icons(request):
+    html_template = loader.get_template('home/icons.html')
+    return HttpResponse(html_template.render({}, request))
+
+def google(request):
+    html_template = loader.get_template('home/map.html')
+    return HttpResponse(html_template.render({}, request))
+
+def profile(request):
+    html_template = loader.get_template('home/profile.html')
+    return HttpResponse(html_template.render({}, request))
+
+def tables(request):
+    html_template = loader.get_template('home/tables.html')
+    return HttpResponse(html_template.render({}, request))
+
+def login(request):
+    html_template = loader.get_template('home/login.html')
+    return HttpResponse(html_template.render({}, request))
+
+def register(request):
+    html_template = loader.get_template('home/register.html')
+    return HttpResponse(html_template.render({}, request))
