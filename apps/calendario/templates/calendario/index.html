@@ -5,6 +5,96 @@
 
 {% block stylesheets %}
     <link href="{% static 'vendors/calender/main.css' %}" rel="stylesheet" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap');
+        .cal-wrapper{
+            background: #fff;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding:20px;
+            border-radius:10px;
+        }
+        
+        # calendar
+        
+        .fc-timegrid-slot-label {
+            font-weight: 800;
+        }
+        
+        .fc-timegrid-slots table tr {
+            transition: all .15s ease;
+        }
+        
+        .fc-timegrid-slots table tr:hover {
+            background: #fffae2 !important;
+            transition: all .15s ease;
+        }
+        
+        // .fc-timegrid-slots table tr:nth-child(4n + 1) {
+        //     background: #fffae2 !important;
+        // }
+
+        .fc-timegrid-slot-label[data-time*=":10"],
+        .fc-timegrid-slot-label[data-time*=":15"],
+        .fc-timegrid-slot-label[data-time*=":20"],
+        .fc-timegrid-slot-label[data-time*=":25"],
+        .fc-timegrid-slot-label[data-time*=":30"],
+        .fc-timegrid-slot-label[data-time*=":35"],
+        .fc-timegrid-slot-label[data-time*=":40"],
+        .fc-timegrid-slot-label[data-time*=":45"],
+        .fc-timegrid-slot-label[data-time*=":50"],
+        .fc-timegrid-slot-label[data-time*=":55"] {
+            // font-size: 80%;
+            opacity: 0.5;
+            font-weight: 400;
+        }
+        
+        .fc .fc-highlight {
+            background: #f16621 !important;
+        }
+        
+        .fc-day-today {
+            background-color: #fffae2;
+        }
+        
+        .fc-day-past {
+            background-color: #f7edee;
+        }
+        
+        th.fc-day-today:before {
+            content: 'Today';
+            font-size: 80%;
+            line-height: 1;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+        
+        th.fc-day-past:before {
+            content: 'Past';
+            font-size: 80%;
+            line-height: 1;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+        
+        th.fc-day-future:before {
+            content: "\00a0";
+            font-size: 80%;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+        
+        .fc-timegrid-axis-frame:after {
+            content: '-';
+            font-family: 'Times';
+            line-height: 36px;
+            text-align: center;
+            display: block;
+            width: 100%;
+            font-size: 24px;
+            color: #f16621;
+        }        
+    </style>
 {% endblock stylesheets %}
 
 {% block content %}
@@ -39,10 +129,23 @@
                 <div class="card">
                     <!-- Card header -->
                     <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Calendario </h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="#!" class="btn btn-sm btn-primary">1 día</a>
+                                <a href="#!" class="btn btn-sm btn-primary">3 días</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% comment "" %}
+                    <div class="card-header border-0">
                         <h3 class="mb-0">Encabezado de tabla</h3>
                     </div>
+                    {% endcomment %}
                     <!-- Card body - tabla -->
-                    <div class="card-body p-0">
+                    <div class="card-body py-4">
                         <div class="calendar" data-toggle="calendar" id="calendar"></div>
                         {% comment "" %}
                         <div class="table-responsive">
@@ -157,25 +260,98 @@
 
 <!-- Specific JS goes HERE --> 
 {% block javascripts %}
-    <script src="{% static 'vendors/calender/main.js' %}"></script>
+    <script src="{% static 'vendors/calender/main.min.js' %}"></script>
+    <script src="{% static 'vendors/calender/moment.min.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
+            var today = moment().day();
+            // alert( calendar.today(); );
+            // alert( new Date(2024, 1, 29, 19, 00) );
+            
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',    // timeGridDay
-                headerToolbar: {
-                    left: 'prev,next',
-                    right: 'timeGridWeek,timeGridDay'
-                }
-                // plugins: [timeGridPlugin],
-                // initialView: 'timeGridWeek',
+                initialView: 'timeGridThreeDays',   // 'timeGridDay',
+                firstDay: today,
+                contentHeight: 'auto',          // alt automático
+                nowIndicator: true,             // indicador hora actual
+                locale: 'es',                   // internalización
+                navLinks: true,
+                weekends: true,                 // permite fin de semana
+                // encabezado del día
+                dayHeaders: true,
+                dayHeaderFormat: { weekday: 'long', day: 'numeric', month: 'numeric', omitCommas: true },
+                // slot
+                allDaySlot : false,             // sin eventos para todo el día
+                selectable: true,               // muestra slot seleccionado
+                slotDuration: '00:10',          // lapso de tiempo entre eventos
+                slotLabelInterval: "00:10",     // etiqueta de tiempo entre eventos
+                slotLabelFormat: {hour: 'numeric', minute: '2-digit', hour12: false,},
+                slotMinTime: '08:00',           // hora de inicio
+                slotMaxTime: '21:00',           // hora de finalización
+                // event
+                defaultEventMinutes: 10,        // 
+                // header
+                headerToolbar: false,
                 // headerToolbar: {
-                //   left: 'prev,next',
-                //   center: 'title',
-                //   right: 'timeGridWeek,timeGridDay' // user can switch between the two
-                // }                
-            });
+                //     left: 'prev,next today',
+                //     center: 'title',
+                //     right: 'timeGridDay,timeGridThreeDays'
+                // },
+                buttonText: {
+                    today: 'Hoy',
+                    week: 'Semana',
+                    day: '1 día'
+                },
+                views: {
+                    timeGridThreeDays: {
+                        type: 'timeGrid',
+                        duration: { days: 3 },                        
+                        buttonText: '3 días',
+                    },
+                    timeGridFourDay: {
+                        type: 'timeGrid',
+                        duration: { days: 4 },
+                        buttonText: '4 días',
+                    }
+                },
+                // eventColor: '#f16621',         // color para todos los eventos
+                eventTimeFormat: { 
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                },
+                eventContent: function (arg) {
+                    return {
+                        html: arg.event.title
+                    };
+                },        
+                validRange: function (today) {
+                    return {
+                        start: today,
+                    };
+                },
+                // events: https://fullcalendar.io/demo-events.json,
+                events: [
+                    // objeto evento: https://fullcalendar.io/docs/v5/event-object
+                    {
+                        title:  'evento 1',
+                        // start: new Date(2024, 1, 29, 19, 00),
+                        start:  '2024-01-29T12:00:00',
+                        end:    '2024-01-29T12:40:00',
+                        backgroundColor: '#f16621', 
+                        textColor: 'black',
+                        allDay: false
+                    },
+                    {
+                        title: 'evento 2',
+                        start: '2024-01-29T12:10:00',
+                        end:   '2024-01-29T12:45:00',
+                        allDay: false
+                    },
+                ],
 
+            });
+           
             calendar.render();
         });
     
