@@ -12,9 +12,16 @@ from django.urls import reverse
 
 @login_required(login_url="/login/")
 def index(request):
+    context = {}
+    html_template = loader.get_template('home/index.html')
+    return HttpResponse(html_template.render(context, request))
+
+
+@login_required(login_url="/login/")
+def dashboard(request):
     context = {'segment': 'index'}
 
-    html_template = loader.get_template('home/index.html')
+    html_template = loader.get_template('home/dashboard.html')
     return HttpResponse(html_template.render(context, request))
 
 
