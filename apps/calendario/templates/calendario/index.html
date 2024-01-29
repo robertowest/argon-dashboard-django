@@ -131,11 +131,14 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">Calendario </h3>
+                                <!-- <h3 class="mb-0">Calendario </h3> -->
+                                <a id="prev" href="javascript:void(0)" class="btn btn-sm btn-primary"> < </a>
+                                <a id="next" href="javascript:void(0)" class="btn btn-sm btn-primary"> > </a>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="#!" class="btn btn-sm btn-primary">1 día</a>
-                                <a href="#!" class="btn btn-sm btn-primary">3 días</a>
+                                <a id="today" href="javascript:void(0)" class="btn btn-sm btn-info text-dark">Hoy</a>
+                                <a id="oneDay" href="javascript:void(0)" class="btn btn-sm btn-primary">1 día</a>
+                                <a id="threeDay" href="javascript:void(0)" class="btn btn-sm btn-primary">3 días</a>
                             </div>
                         </div>
                     </div>
@@ -270,7 +273,7 @@
             // alert( new Date(2024, 1, 29, 19, 00) );
             
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridThreeDays',   // 'timeGridDay',
+                initialView: 'timeGridDay',     // timeGridThreeDays
                 firstDay: today,
                 contentHeight: 'auto',          // alt automático
                 nowIndicator: true,             // indicador hora actual
@@ -351,9 +354,36 @@
                 ],
 
             });
-           
+
             calendar.render();
+
+            document.getElementById('prev').addEventListener('click', function() {
+                calendar.prev();
+            });
+          
+            document.getElementById('next').addEventListener('click', function() {
+                calendar.next();
+            });
+
+            document.getElementById('today').addEventListener('click', function() {
+                calendar.today();
+            });
+
+            document.getElementById('oneDay').addEventListener('click', function() {
+                // console.log(calendar.changeView());
+                // var view = $('#calendar').fullCalendar('getView');
+                // alert("The view's title is " + view.title);                
+                // calendar.changeView('timeGridDay');
+                calendar.changeView('timeGridDay');
+            });
+            
+            document.getElementById('threeDay').addEventListener('click', function() {
+                calendar.changeView('timeGridThreeDays');
+                // calendar.changeView('timeGridWeek');
+            });
+
         });
     
-    </script>    
+    </script>  
+
 {% endblock javascripts %}
